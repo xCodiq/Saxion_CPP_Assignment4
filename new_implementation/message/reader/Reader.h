@@ -22,7 +22,7 @@ public:
     Message next();
 
 private:
-    static DeviceType parseDeviceType(const string &deviceTypeStr);
+    static DeviceType parseDeviceType(const string& deviceTypeStr);
 };
 
 

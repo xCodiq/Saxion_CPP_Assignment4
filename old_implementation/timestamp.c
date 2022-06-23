@@ -24,18 +24,18 @@ static _Bool get_timepoint(struct timespec *ts) {
              return true;
          }
 #else
-    if (clock_gettime(CLOCK_REALTIME, ts) == 0) {
-        return true;
-    }
+    if(clock_gettime(CLOCK_REALTIME, ts) == 0) {
+          return true;
+      }
 #endif
     return false;
 }
 
 
-long long get_timestamp() {
+long long get_timestamp(){
     // Note: if for some reasons `get_timepoint` doesn't work
     struct timespec ts;
-    if (get_timepoint(&ts)) {
+    if (get_timepoint(&ts)){
         return ts.tv_sec * 1000000 + ts.tv_nsec / 1000;
     }
     return 0;

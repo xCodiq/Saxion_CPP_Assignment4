@@ -23,8 +23,7 @@ Message Reader::next() {
     long targetId = std::stol(nextLine.substr(0, targetIdPosition));
 
     auto deviceTypePosition = nextLine.find(' ', targetIdPosition + 1);
-    DeviceType deviceType = Reader::parseDeviceType(
-            nextLine.substr(targetIdPosition + 1, deviceTypePosition - (targetIdPosition + 1)));
+    DeviceType deviceType = Reader::parseDeviceType(nextLine.substr(targetIdPosition + 1, deviceTypePosition - (targetIdPosition + 1)));
 
     string text = nextLine.substr(deviceTypePosition + 1);
 

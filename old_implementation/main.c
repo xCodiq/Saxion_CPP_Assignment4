@@ -6,7 +6,7 @@
 #include "message_broker.h"
 #include "message_list.h"
 
-int main() {
+int main(){
     printf("Hello, old C implementation!\n");
     message_t msg0 = create_message(123, dev_air_purifier, "SET ON");
     message_t msg1 = create_message(234, dev_temperature_sensor, "SET ON");
@@ -29,10 +29,10 @@ int main() {
     int count = print_messages_for(&broker, 321);
     printf("Printed %d messages.\n", count);
 
-    message_t *msg = NULL;
+    message_t* msg = NULL;
     long target_id = 123;
     printf("Extracting messages for target_id=%ld\n", target_id);
-    while ((msg = next_message_for(&broker, target_id))) {
+    while((msg = next_message_for(&broker, target_id))){
         print_message(msg);
         free(msg);
     }
@@ -42,24 +42,24 @@ int main() {
 
     target_id = 321;
     printf("Extracting messages for target_id=%ld\n", target_id);
-    while ((msg = next_message_for(&broker, target_id))) {
+    while((msg = next_message_for(&broker, target_id))){
         print_message(msg);
         free(msg);
     }
     printf("There are %d messages left fot target_id=%ld\n", count_messages_for(&broker, target_id), target_id);
     printf("There are %ld messages left in broker\n", broker._count);
 
-    const char *file_name = "messages.in";
+    const char* file_name = "messages.in";
     printf("\n\nReading the file %s\n\n", file_name);
 
-    if (!lst_open(file_name)) {
+    if (!lst_open(file_name)){
         printf("Coudn't open file!\n");
         return EXIT_FAILURE;
     }
 
-    const message_t *pmessage = NULL;
+    const message_t* pmessage = NULL;
     count = 0;
-    while ((pmessage = lst_read_next())) {
+    while((pmessage = lst_read_next())){
         // FIXME: there's some error here about mixing const and non-const
         push(&broker, pmessage);
         ++count;
@@ -69,6 +69,7 @@ int main() {
     printf("Finished reading the file with %d messages.\n", count);
 
     printf("There are %ld messages in broker\n", broker._count);
+
 
 
     return EXIT_SUCCESS;

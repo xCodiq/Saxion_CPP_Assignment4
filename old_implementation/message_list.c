@@ -9,7 +9,7 @@
 
 #define BUFFER_SIZE (1024)
 
-static FILE *fp = NULL;
+static FILE* fp = NULL;
 static char buffer[BUFFER_SIZE];
 static message_t message;
 
@@ -20,20 +20,20 @@ void lst_close() {
     }
 }
 
-_Bool lst_open(const char *file_name) {
+_Bool lst_open(const char* file_name) {
     lst_close();
     return (fp = fopen(file_name, "r")) != NULL;
 }
 
 // FIXME: returns a pointer with no clear ownership - here the pointer is to an internal data structure
 //        this can be dangerous if somebody tries to free this pointer!
-const message_t *lst_read_next() {
+const message_t* lst_read_next(){
 
-    if (fp && !feof(fp)) {
-        if (fgets(buffer, BUFFER_SIZE, fp)) {
-            char *str = NULL;
+    if (fp && !feof(fp)){
+        if (fgets(buffer, BUFFER_SIZE, fp)){
+            char* str = NULL;
             long target_id = strtol(buffer, &str, 10);
-            if (&buffer[0] != str) {
+            if (&buffer[0] != str){
                 // parsed the target_type id
 
                 // skip over all the spaces:
@@ -42,9 +42,9 @@ const message_t *lst_read_next() {
                 // identify the target_type type
                 // FIXME: identification is based on the first three characters only - not future prof
                 device_t target_type = dev_undefined;
-                for (int dev = dev_undefined; dev < DEV_LAST; ++dev) {
+                for (int dev = dev_undefined; dev < DEV_LAST; ++dev){
                     // compare 3 first characters of the dev ids
-                    if (strncmp(str, device2str(dev), 3) == 0) {
+                    if (strncmp(str, device2str(dev), 3) == 0){
                         target_type = dev;
                         break;
                     }
@@ -54,7 +54,7 @@ const message_t *lst_read_next() {
                 // skip over all the spaces:
                 while (isspace(*str)) ++str;
                 // search for a newline and if it's there replace it with '\0'
-                char *end = strpbrk(str, "\n");
+                char* end = strpbrk(str, "\n");
                 if (end) *end = '\0';
 
                 message = create_message(target_id, target_type, str);
